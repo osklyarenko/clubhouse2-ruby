@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Build a snapshot version
           command: |
-            export CH_RUBY_VERSION=0.0.1-$(echo ${CIRCLE_SHA1} | cut -c1-8)
+            export CH_RUBY_VERSION=0.0.1-$(echo ${CIRCLE_SHA1} | cut -c1-8).vgs
             gem build clubhouse2.gemspec
       - <<: *persist-workspace
   build-gem-tag:
@@ -87,7 +87,7 @@ jobs:
       - run:
           name: Build a tagged version
           command: |
-            export CH_RUBY_VERSION=$(echo $CIRCLE_TAG | cut -c2-30)
+            export CH_RUBY_VERSION=$(echo $CIRCLE_TAG | cut -c2-30).vgs
             gem build clubhouse2.gemspec
       - <<: *persist-workspace
 
@@ -101,7 +101,7 @@ jobs:
       - run:
           name: Publish a snapshot version
           command: |
-            export CH_RUBY_VERSION=0.0.1.pre.$(echo ${CIRCLE_SHA1} | cut -c1-8)
+            export CH_RUBY_VERSION=0.0.1.pre.$(echo ${CIRCLE_SHA1} | cut -c1-8).vgs
             curl -F package=@clubhouse2-$CH_RUBY_VERSION.gem https://$GEMFURY_PUSH_TOKEN@push.fury.io/osklyarenko/
       - <<: *persist-workspace
 
@@ -116,7 +116,7 @@ jobs:
       - run:
           name: Publish a tagged version
           command: |
-            export CH_RUBY_VERSION=$(echo $CIRCLE_TAG | cut -c2-30)
+            export CH_RUBY_VERSION=$(echo $CIRCLE_TAG | cut -c2-30).vgs
             curl -F package=@clubhouse2-$CH_RUBY_VERSION.gem https://$GEMFURY_PUSH_TOKEN@push.fury.io/osklyarenko/
       - <<: *persist-workspace
 
